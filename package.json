@@ -1,0 +1,27 @@
+{
+  "name": "employeetracker",
+  "version": "1.0.0",
+  "description": "MySQL Employee Tracker",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loosekonnection/employeeTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Loosekonnection/employeeTracker/issues"
+  },
+  "homepage": "https://github.com/Loosekonnection/employeeTracker#readme",
+  "dependencies": {
+    "console-table-printer": "^2.8.1",
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1"
+  }
+}
