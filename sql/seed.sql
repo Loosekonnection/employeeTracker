@@ -22,10 +22,10 @@ SELECT * FROM employee;
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Doe", 1, "Ashley Rodriguez"),
 ("Mike", "Chan", 2, "John Doe"),
-("Ashley", "Rodriguez", 3, null),
+("Ashley", "Rodriguez", 3, "n/a"),
 ("Kevin", "Tupik", 4, "Ashley Rodriguez"),
-("Malia", "Brown", 6, null),
-("Sarah", "Lourd", 7, null),
+("Malia", "Brown", 6, "n/a"),
+("Sarah", "Lourd", 7, "n/a"),
 ("Tom", "Allen", 8, "Sarah Lourd"),
 ("Tammer", "Galal", 4, "Kevin Tupik"),
 ("Christian", "Eckenrode", 3, "Mike Chan");

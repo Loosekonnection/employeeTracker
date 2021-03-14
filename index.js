@@ -759,7 +759,7 @@ const buildMgrArr = () => {
             arr.push(res[i].manager_id);
         }
         mgrArr = arr.filter((e) => { return e != null; });
-        mgrArr.push('null');
+        mgrArr.push('none');
     });
 }
 
