@@ -25,7 +25,7 @@ const connection = mysql.createConnection({
     database: 'employees_db',
 });
 
-connection.connect(function (err) {
+connection.connect((err) => {
     if (err) throw err;
     init();
     buildEmployeeIdArr();
@@ -65,7 +65,7 @@ const taskQuestion = [
 // Function to start the application and prompt to choose a task
 const init = () => {
 
-    inquirer.prompt(taskQuestion).then(function (data) {
+    inquirer.prompt(taskQuestion).then((data) => {
         const taskAnswer = data.querySelect;
         if (taskAnswer === '1 - View all Employees') {
             viewAll();
@@ -148,7 +148,7 @@ const viewAllByDept = () => {
 const viewMgrs = () => {
 
     const dbQuery = `SELECT manager_id FROM employee`;
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         inquirer.prompt({
             name: 'managers',
@@ -401,11 +401,11 @@ const editRole = () => {
                         return lastNameArr;
                     },
                 },
-            ]).then(function (answer) {
+            ]).then((answer) => {
                 let lnEditRole = answer.last_name;
-                const query = `SELECT id FROM employee WHERE first_name = ? AND last_name = ?`;
+                const dbQuery = `SELECT id FROM employee WHERE first_name = ? AND last_name = ?`;
 
-                connection.query(query, [fnEditRole, lnEditRole], (err, res) => {
+                connection.query(dbQuery, [fnEditRole, lnEditRole], (err, res) => {
                     inquirer.prompt([
                         {
                             name: 'id',
@@ -484,7 +484,7 @@ const editRole = () => {
 }
 
 // Edit an employees manager
-function editEmployeeMgr() {
+const editEmployeeMgr = () => {
 
     inquirer.prompt([
         {
@@ -541,7 +541,7 @@ function editEmployeeMgr() {
                         ]).then((answer) => {
                             let newMgr = answer.manager || null;
 
-                            function FindNewManagerID() {
+                            const newMgrId = () => {
                                 for (let q = 0; q < mgrIdArr.length; q++) {
                                     if (mgrIdArr[q].manager === answer.manager) {
                                         return mgrIdArr[q].manager_id;
@@ -549,7 +549,7 @@ function editEmployeeMgr() {
                                 }
                             }
 
-                            let updateManagerID = FindNewManagerID();
+                            let updateManagerID = newMgrId();
 
                             console.log(`Employee Manager change request: First Name: ${fnEditMgr} - Last Name: ${lnEditMgr} - New Manager: ${newMgr}`);
                             inquirer.prompt([
@@ -562,7 +562,7 @@ function editEmployeeMgr() {
                                         'No',
                                     ],
                                 },
-                            ]).then(function (answer) {
+                            ]).then((answer) => {
                                 if (answer.validate === 'Yes') {
                                     console.log(`Employee: ${fnEditMgr} ${lnEditMgr} has been updated with the new Manager: ${newMgr}`);
                                     connection.query(
@@ -596,7 +596,7 @@ function editEmployeeMgr() {
 }
 
 // Function to delete/remove employee from the database
-function deleteEmployee() {
+const deleteEmployee = () => {
 
     inquirer.prompt([
         {
@@ -709,7 +709,7 @@ const deleteRole = () => {
 }
 
 // Function to delete a department from the database
-function deleteDept() {
+const deleteDept = () => {
 
     inquirer.prompt([
         {
@@ -736,7 +736,7 @@ const buildEmployeeIdArr = () => {
 
     const dbQuery = `SELECT id FROM employee;`;
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             employeeIdArr.push(res[i].id);
@@ -749,7 +749,7 @@ const buildemployeeFnArr = () => {
 
     const dbQuery = `SELECT first_name FROM employee;`;
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             employeeFnArr.push(res[i].first_name);
@@ -764,12 +764,12 @@ const buildMgrArr = () => {
 
     let arr = [];
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             arr.push(res[i].manager_id);
         }
-        mgrArr = arr.filter(function (e) { return e != null; });
+        mgrArr = arr.filter((e) => { return e != null; });
         mgrArr.push('null');
     });
 }
@@ -779,7 +779,7 @@ const buildRoleIdArr = () => {
 
     const dbQuery = `SELECT id, title FROM role;`;
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             roleIdArr.push(res[i]);
@@ -792,7 +792,7 @@ const buildRoleArr = () => {
 
     const dbQuery = `SELECT id, title FROM role;`;
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             roleArr.push(res[i].title);
@@ -805,7 +805,7 @@ const buildDeptArr = () => {
 
     const dbQuery = `SELECT id, name FROM department;`;
 
-    connection.query(dbQuery, function (err, res) {
+    connection.query(dbQuery, (err, res) => {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             deptArr.push(res[i].name);
@@ -821,7 +821,7 @@ const mainMenu = () => {
         type: 'list',
         message: 'Return to the main menu or exit the application?',
         choices: ['Return To Main Menu', 'Exit Application'],
-    }).then(function (data) {
+    }).then((data) => {
         const menu = data.mainMenu;
         if (menu === 'Return To Main Menu') {
             init();
