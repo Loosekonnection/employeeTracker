@@ -248,6 +248,11 @@ const addNewDept = () => {
         connection.query('INSERT INTO department SET ?', addNewDept, (err, res) => {
             if (err) throw err;
         });
+        buildEmployeeIdArr();
+        buildemployeeFnArr();
+        buildMgrArr();
+        buildRoleIdArr();
+        buildRoleArr();
         buildDeptArr();
         mainMenu();
     });
