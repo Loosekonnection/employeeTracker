@@ -352,9 +352,9 @@ const addEmployee = () => {
         let employeeLastName = answer.last_name;
 
         const checkRoleId = () => {
-            for (let p = 0; p < roleIdArr.length; p++) {
-                if (roleIdArr[p].title === answer.role) {
-                    return roleIdArr[p].id;
+            for (let i = 0; i < roleIdArr.length; i++) {
+                if (roleIdArr[i].title === answer.role) {
+                    return roleIdArr[i].id;
                 }
             }
         }
@@ -632,8 +632,8 @@ const deleteEmployee = () => {
                             message: "Please select the Employee's ID",
                             choices: () => {
                                 let employeeIdArr = [];
-                                for (let m = 0; m < res.length; m++) {
-                                    employeeIdArr.push(res[m].id);
+                                for (let i = 0; i < res.length; i++) {
+                                    employeeIdArr.push(res[i].id);
                                 }
                                 return employeeIdArr;
                             },
