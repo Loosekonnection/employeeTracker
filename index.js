@@ -360,6 +360,7 @@ const addEmployee = () => {
         }
 
         let employeeRole = checkRoleId();
+        console.log(employeeRole);
         let employeeManager = answer.manager;
 
         console.log(`Adding the new Employee: ${employeeFirstName} ${employeeLastName}, to the database!`);
