@@ -538,8 +538,7 @@ const editEmployeeMgr = () => {
                                 return employeeIdArr;
                             },
                         },
-                    ]).then((answer) => {
-                        let employeeIdEditMgr = answer.id;
+                    ]).then(() => {
                         inquirer.prompt([
                             {
                                 name: 'manager',
@@ -548,17 +547,7 @@ const editEmployeeMgr = () => {
                                 choices: mgrArr,
                             },
                         ]).then((answer) => {
-                            let newMgr = answer.manager || null;
-
-                            const newMgrId = () => {
-                                for (let i = 0; i < mgrIdArr.length; i++) {
-                                    if (mgrIdArr[i].manager === answer.manager) {
-                                        return mgrIdArr[i].manager_id;
-                                    }
-                                }
-                            }
-
-                            let updateManagerID = newMgrId();
+                            let newMgr = answer.manager;
 
                             console.log(`Employee Manager change request: First Name: ${fnEditMgr} - Last Name: ${lnEditMgr} - New Manager: ${newMgr}`);
                             inquirer.prompt([
@@ -575,8 +564,8 @@ const editEmployeeMgr = () => {
                                 if (answer.validate === 'Yes') {
                                     console.log(`Employee: ${fnEditMgr} ${lnEditMgr} has been updated with the new Manager: ${newMgr}`);
                                     connection.query(
-                                        'UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ? AND id = ?',
-                                        [updateManagerID, fnEditMgr, lnEditMgr, employeeIdEditMgr],
+                                        'UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ?',
+                                        [newMgr, fnEditMgr, lnEditMgr],
 
                                         (err, res) => {
                                             if (err) throw err;
