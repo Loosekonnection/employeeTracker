@@ -33,14 +33,14 @@ connection.connect((err) => {
     buildMgrArr();
     buildRoleIdArr();
     buildRoleArr();
-    buildDeptArr();    
+    buildDeptArr();
 });
 
 // Task Selection
 const taskQuestion = [
     {
         type: 'list',
-        message: 'Please select from the list of options:',
+        message: 'Please select a task from the list of options:',
         name: 'querySelect',
         choices: [
             '1 - View all Employees',
@@ -126,7 +126,7 @@ const viewAllByDept = () => {
         inquirer.prompt({
             name: 'chosenDept',
             type: 'list',
-            message: "Please select a Department for which you wish to see its Employees':",
+            message: "Please select a Department for which you wish to see its associated Employees':",
             choices: deptArr,
         }).then((answer) => {
             const deptQuery = `
@@ -266,7 +266,7 @@ const addNewRole = () => {
                     if (!roleArr.includes(input)) {
                         return true;
                     } else {
-                        console.log(' - Sorry this Role name is already in use! Please enter a unique new role name:');
+                        console.log(' - Sorry this Role name is already in use! Please enter a unique new Role name:');
                         return false;
                     };
                 };
@@ -284,7 +284,7 @@ const addNewRole = () => {
             message: 'Please select a Department that the Role is to be associated with:',
             choices: deptArr,
         }
-        
+
     ]).then((answer) => {
 
         let newRoleName = answer.newRole;
@@ -315,7 +315,7 @@ const addEmployee = () => {
                 if (letters) {
                     return true;
                 } else {
-                    console.log(' - Invalid characters, only letters allowed! Please retry using only letters.');
+                    console.log(' - Invalid characters entered, only letters allowed! Please retry using only letters.');
                     return false;
                 }
             },
@@ -329,7 +329,7 @@ const addEmployee = () => {
                 if (letters) {
                     return true;
                 } else {
-                    console.log(' - Invalid characters, only letters allowed! Please retry using only letters.');
+                    console.log(' - Invalid characters entered, only letters allowed! Please retry using only letters.');
                     return false;
                 }
             },
@@ -337,13 +337,13 @@ const addEmployee = () => {
         {
             name: 'role',
             type: 'list',
-            message: "Please select the new Employee's job title?",
+            message: "Please select the new Employee's Role Title?",
             choices: roleArr,
         },
         {
             name: 'manager',
             type: 'list',
-            message: "Please select who will be the new Employee's manager?",
+            message: "Please select who will be the new Employee's Manager?",
             choices: mgrArr,
         },
     ]).then((answer) => {
@@ -453,20 +453,17 @@ const editRole = () => {
                             ]).then((answer) => {
                                 if (answer.validate === 'Yes') {
                                     console.log(`Employee: ${fnEditRole} ${lnEditRole}, now has a new Role Title of: ${newRole}.`);
-                                    connection.query(
-                                        'UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ? AND id = ?',
+                                    connection.query('UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ? AND id = ?',
                                         [updateRoleId, fnEditRole, lnEditRole, idEditRole],
 
                                         (err, res) => {
                                             if (err) throw err;
 
-                                            console.log(`Now ${fnEditRole} ${lnEditRole}'s Role Title has been updated. Don't forget to update their department manager if applicable`);
-                                            buildMgrArr();
-                                            buildRoleArr();
-                                            buildDeptArr();
+                                            console.log(`Now ${fnEditRole} ${lnEditRole}'s Role Title has been updated. Don't forget to update their Department Manager if applicable`);
                                             buildEmployeeIdArr();
                                             buildemployeeFnArr();
                                             buildRoleIdArr();
+                                            buildRoleArr();
                                             mainMenu();
                                         }
                                     );
@@ -523,8 +520,8 @@ const editEmployeeMgr = () => {
                             message: "Please select the Employee's ID:",
                             choices: () => {
                                 let employeeIdArr = [];
-                                for (let m = 0; m < res.length; m++) {
-                                    employeeIdArr.push(res[m].id);
+                                for (let i = 0; i < res.length; i++) {
+                                    employeeIdArr.push(res[i].id);
                                 }
                                 return employeeIdArr;
                             },
@@ -542,9 +539,9 @@ const editEmployeeMgr = () => {
                             let newMgr = answer.manager || null;
 
                             const newMgrId = () => {
-                                for (let q = 0; q < mgrIdArr.length; q++) {
-                                    if (mgrIdArr[q].manager === answer.manager) {
-                                        return mgrIdArr[q].manager_id;
+                                for (let i = 0; i < mgrIdArr.length; i++) {
+                                    if (mgrIdArr[i].manager === answer.manager) {
+                                        return mgrIdArr[i].manager_id;
                                     }
                                 }
                             }
@@ -632,7 +629,7 @@ const deleteEmployee = () => {
                         {
                             name: 'id',
                             type: 'list',
-                            message: "Please select the employees ID",
+                            message: "Please select the Employee's ID",
                             choices: () => {
                                 let employeeIdArr = [];
                                 for (let m = 0; m < res.length; m++) {
@@ -648,7 +645,7 @@ const deleteEmployee = () => {
                             {
                                 name: 'validate',
                                 type: 'list',
-                                message: `Are you sure you want to delete employee: ${fnDelete} ${lnDelete} with ID: ${employeeIdDelete}?`,
+                                message: `Are you sure you want to delete Employee: ${fnDelete} ${lnDelete} with ID: ${employeeIdDelete}?`,
                                 choices: [
                                     'Yes',
                                     'No',
@@ -663,17 +660,13 @@ const deleteEmployee = () => {
 
                                     (err, res) => {
                                         if (err) throw err;
-                                        buildMgrArr();
-                                        buildRoleArr();
-                                        buildDeptArr();
-                                        buildEmployeeIdArr();
                                         buildemployeeFnArr();
                                         buildRoleIdArr();
                                         mainMenu();
                                     }
                                 );
                             } else {
-                                console.log("Edit employee's manager cancelled.");
+                                console.log("Deletion of Employee cancelled.");
                                 mainMenu();
                             }
                         });
@@ -691,18 +684,16 @@ const deleteRole = () => {
         {
             name: 'deleteRole',
             type: 'list',
-            message: 'Please select the role you wish to delete?',
+            message: 'Please select the Role you wish to delete?',
             choices: roleArr,
         },
     ]).then((answer) => {
-        console.log(`The ${answer.deleteRole} role has successfully been deleted from the database.`);
+        console.log(`The ${answer.deleteRole} Role has successfully been deleted from the database.`);
         connection.query('DELETE FROM role WHERE title = ?', [answer.deleteRole], (err, res) => {
             if (err) throw err;
-            
+
         });
-        buildMgrArr();
         buildRoleArr();
-        buildDeptArr();
         buildRoleIdArr();
         mainMenu();
     });
@@ -722,10 +713,8 @@ const deleteDept = () => {
         console.log(`The ${answer.deleteDept} Department has successfully been deleted from the database.`);
         connection.query('DELETE FROM department WHERE name = ?', [answer.deleteDept], (err, res) => {
             if (err) throw err;
-            
+
         });
-        buildMgrArr();
-        buildRoleArr();
         buildDeptArr();
         mainMenu();
     });
@@ -819,11 +808,11 @@ const mainMenu = () => {
     inquirer.prompt({
         name: 'mainMenu',
         type: 'list',
-        message: 'Return to the main menu or exit the application?',
-        choices: ['Return To Main Menu', 'Exit Application'],
+        message: 'Would you like to: 1 - Return to the main menu or 2 - Exit the application?',
+        choices: ['1 - Return To Main Menu', '2 - Exit Application'],
     }).then((data) => {
         const menu = data.mainMenu;
-        if (menu === 'Return To Main Menu') {
+        if (menu === '1 - Return To Main Menu') {
             init();
         } else {
             exitApp();
