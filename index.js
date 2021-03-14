@@ -297,7 +297,12 @@ const addNewRole = () => {
         connection.query('INSERT INTO role SET ?', addNewRole, (err, res) => {
             if (err) throw err;
         });
+        buildEmployeeIdArr();
+        buildemployeeFnArr();
+        buildMgrArr();
+        buildRoleIdArr();
         buildRoleArr();
+        buildDeptArr();
         mainMenu();
     });
 }
@@ -360,7 +365,6 @@ const addEmployee = () => {
         }
 
         let employeeRole = checkRoleId();
-        console.log(employeeRole);
         let employeeManager = answer.manager;
 
         console.log(`Adding the new Employee: ${employeeFirstName} ${employeeLastName}, to the database!`);
@@ -369,7 +373,12 @@ const addEmployee = () => {
         connection.query('INSERT INTO employee SET ?', addnewEmployee, (err, res) => {
             if (err) throw err;
         });
+        buildEmployeeIdArr();
         buildemployeeFnArr();
+        buildMgrArr();
+        buildRoleIdArr();
+        buildRoleArr();
+        buildDeptArr();
         mainMenu();
     });
 }
@@ -463,8 +472,10 @@ const editRole = () => {
                                             console.log(`Now ${fnEditRole} ${lnEditRole}'s Role Title has been updated. Don't forget to update their Department Manager if applicable`);
                                             buildEmployeeIdArr();
                                             buildemployeeFnArr();
+                                            buildMgrArr();
                                             buildRoleIdArr();
                                             buildRoleArr();
+                                            buildDeptArr();
                                             mainMenu();
                                         }
                                     );
@@ -571,12 +582,12 @@ const editEmployeeMgr = () => {
                                             if (err) throw err;
 
                                             console.log(`${fnEditMgr} ${lnEditMgr}'s Manager has been updated. Don't forget to update their Role if applicable`);
-                                            buildMgrArr();
-                                            buildRoleArr();
-                                            buildDeptArr();
                                             buildEmployeeIdArr();
                                             buildemployeeFnArr();
+                                            buildMgrArr();
                                             buildRoleIdArr();
+                                            buildRoleArr();
+                                            buildDeptArr();
                                             mainMenu();
                                         }
                                     );
@@ -661,8 +672,12 @@ const deleteEmployee = () => {
 
                                     (err, res) => {
                                         if (err) throw err;
+                                        buildEmployeeIdArr();
                                         buildemployeeFnArr();
+                                        buildMgrArr();
                                         buildRoleIdArr();
+                                        buildRoleArr();
+                                        buildDeptArr();
                                         mainMenu();
                                     }
                                 );
@@ -694,8 +709,12 @@ const deleteRole = () => {
             if (err) throw err;
 
         });
-        buildRoleArr();
+        buildEmployeeIdArr();
+        buildemployeeFnArr();
+        buildMgrArr();
         buildRoleIdArr();
+        buildRoleArr();
+        buildDeptArr();
         mainMenu();
     });
 }
@@ -716,6 +735,11 @@ const deleteDept = () => {
             if (err) throw err;
 
         });
+        buildEmployeeIdArr();
+        buildemployeeFnArr();
+        buildMgrArr();
+        buildRoleIdArr();
+        buildRoleArr();
         buildDeptArr();
         mainMenu();
     });
