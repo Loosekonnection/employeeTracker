@@ -64,7 +64,7 @@ You can either clone this repository to a local directory or you can fork this r
 
 *How to use this project:*
 
-Once the the [Installation](#installation) steps have been completed. <br> To then start the application type ```npm start```, this will load the first series of tasks to choose from. <br> <br> For a more detailed explanation please either view the below .gif or use the below link to view the video on how to do this: <br> Click this link to access the video: [Demonstration Video](https://drive.google.com/file/d/1ofz_J3Dk2N823zlvc6wMJ27EYfRo9pbk/view?usp=sharing) <br> <br>![Demo gif](./demo/employee_tracker__demo.gif)
+Once the the [Installation](#installation) steps have been completed. <br> To then start the application type ```node index.js```, this will load the first series of tasks to choose from. <br> <br> For a more detailed explanation please either view the below .gif or use the below link to view the video on how to do this: <br> Click this link to access the video: [Demonstration Video](https://drive.google.com/file/d/1B9Fk7hUZybIsLnGSMbzFnyFfvf_81_lc/view?usp=sharing) <br> <br>![Demo gif](./demo/employee_tracker__demo.gif)
 
 
 ---
